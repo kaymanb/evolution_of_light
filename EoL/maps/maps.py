@@ -9,40 +9,55 @@ class LevelMap:
 
         Tiles can be accessed using the .get_tile(x, y) method. 
         """
-        self.map = [[ Tile(Wall()) for i in range(x)] for j in range(y)]
-        self.rooms = []
-   
+        self.tiles = [[ Tile(Wall()) for i in range(x)] for j in range(y)]
+
     def get_tile(self, x, y):
         """ Returns the tile located at position (x, y) in the map
         """
-        return self.map[x][y]
+        return self.tiles[x][y]
 
     def draw_map(self, screen):
         """ Draws the map to the input screen.
         """
-        for x in range(len(self.map)):
-            for y in range(len(self.map[0])):
-                tile = self.get_tile(0, 0)
+        for x in range(len(self.tiles)):
+            for y in range(len(self.tiles[0])):
+                tile = self.tiles[x][y]
                 screen.addstr(y, x, tile.feature.sprite)
 
         # Add these changes to the screen, but wait for doupdate() to render.
         screen.noutrefresh()
 
+class RandomRoomsMap(LevelMap):
+
+    def __init__(self, x, y):
+        """ Create a RandomRoomsMap with randomly generated rooms.
+        """
+        super().__init__(x, y)
+        self.rooms = []
+                
+
+    def add_room(self, room):
+        """ Add the input room to the map.
+        """
+        self.rooms.append(room)
+        for (x, y) in room.list_floorspace():
+            self.tiles[x][y] = Tile()
+            
 class Tile:
 
 #TODO: Add other variables to tile.
     
     def __init__(self, feature = EmptyFeature()):
-        """ Creates a tile at position (x, y). By default this tile will be a
+        """ Create a tile at position (x, y). By default this tile will be a
         wall.
         """
         self.feature = feature
 
 class Rectangle:
-""" A Rectangluar Prism """
+    """ A Rectangluar Prism """
 
     def __init__(self, x, y, width, height):
-        """ Creates a rectangle with top left corner at (x, y) and with width and
+        """ Create a rectangle with top left corner at (x, y) and with width and
         height w and h respectivly.
 
         (x1, y1) --- (x2, y1)
@@ -51,13 +66,13 @@ class Rectangle:
         (x1, y2) --- (x2, y2)
         """
         self.x1 = x
-        self.y2 = y
+        self.y1 = y
 
         self.x2 = x + width
         self.y2 = x + height
 
     def get_center(self):
-        """ Returns the approximate (rounded down) coordinates of the tile in
+        """ Return the approximate (rounded down) coordinates of the tile in
         the center of the rectangle.
         """
         center_x = (self.x1 + self.x2) // 2
@@ -82,9 +97,11 @@ class Rectangle:
 class Room(Rectangle):
     """ A room.
     """
+    
+    floor_tile = Tile()
 
     def list_floorspace(self):
-        """Returns a list of all coordinate pairs that are in this room.
+        """Return a list of all coordinate pairs that are in this room.
         """
 
         x_coords = [self.x1 + i for i in range(self.x2 - self.x1)]
