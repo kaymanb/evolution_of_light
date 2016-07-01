@@ -1,26 +1,8 @@
-                            Light in the Dark
+Evolution of Light
 
-LitD is a roguelike adventure game playable in the shell. It is written in
+EoL is a roguelike adventure game playable in the shell. It is written in
 python and makes extensive use of the curses library to display text to the
 screen.
-
-              ( \      \__   __/(  ____ \|\     /|\__   __/
-              | (         ) (   | (    \/| )   ( |   ) (   
-              | |         | |   | |      | (___) |   | |   
-              | |         | |   | | ____ |  ___  |   | |   
-              | |         | |   | | \_  )| (   ) |   | |   
-              | (____/\___) (___| (___) || )   ( |   | |   
-              (_______/\_______/(_______)|/     \|   )_(   
-              
-                                in the
-                  ______   _______  _______  _       
-                 (  __  \ (  ___  )(  ____ )| \    /\
-                 | (  \  )| (   ) || (    )||  \  / /
-                 | |   ) || (___) || (____)||  (_/ / 
-                 | |   | ||  ___  ||     __)|   _ (  
-                 | |   ) || (   ) || (\ (   |  ( \ \ 
-                 | (__/  )| )   ( || ) \ \__|  /  \ \
-                 (______/ |/     \||/   \__/|_/    \/
 
 Gameplay:
 The game is composed of typical roguelike elements, but also makes use of a
@@ -35,7 +17,7 @@ In the most generality possible the game is composed of a grid of tiles. Tiles
 can have various properties, but most importantly they can hold a list of items
 as well as a single character, whether that be an NPC or our hero,  a single
 feature (ie: a fountain, a boulder, a staircase, a wall, or nothing). Tiles
-with a wall feature will compase most of the map, along with empty tiles that
+with a wall feature will compose most of the map, along with empty tiles that
 will compose the floor. 
 
 - The Items
@@ -47,4 +29,4 @@ Item class.
 - The Characters
 Characters are objects that can interact with their environment. They can move,
 they can fight, and they can interact with items. Charcaters all extend the
-Character class.  
+Character class.
