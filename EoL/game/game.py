@@ -16,9 +16,9 @@ class LitDGame:
     
     def __init__(self, x, y, screen):
         
-        self.x_size = x
-        self.y_size = y
-        self.levels = [Level(self.x_size, self.y_size)]
+        self.size_x = x
+        self.size_y = y
+        self.levels = [Level(x, y)]
         self.current_level = self.levels[0]
         self.screen = screen
         

@@ -4,9 +4,7 @@ import curses
 class Level:
 
     def __init__(self, x, y):
-        self.level_map = maps.RandomRoomsMap(x, y)
-        x = maps.Room(10, 10, 5, 5)
-        self.level_map.add_room(x)
+        self.level_map = maps.RandomRoomsMap(x, y, 3)
         self.objects = []
 
     def draw_all(self, screen):
