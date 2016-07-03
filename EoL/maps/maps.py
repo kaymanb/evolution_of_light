@@ -60,15 +60,22 @@ class RandomRoomsMap(RoomsMap):
     def generate_rooms(self, num_rooms):
         """ Populate the map with a given number of randomly generated rooms.
         """
-        for room in range(num_rooms):
-            new_room = self.create_random_room()
+        for _ in range(num_rooms):
+            new_room = None
+            valid_room = False
+            
+            while not valid_room:
+                new_room = self.create_random_room()
+                result = self.check_intersections(new_room)
+                valid_room = result
+        
             self.add_room(new_room)
 
     def create_random_room(self):
         """ Create and return a random sized room at a random location.
         """
-        width = random.randint(2, self.MAX_ROOM_WIDTH)
-        height = random.randint(2, self.MAX_ROOM_HEIGHT)
+        width = random.randint(3, self.MAX_ROOM_WIDTH)
+        height = random.randint(3, self.MAX_ROOM_HEIGHT)
 
         # We want the room we create to have walls all the way around it, hence
         # the added 1's in these four statements.
@@ -77,7 +84,15 @@ class RandomRoomsMap(RoomsMap):
         x = random.randint(1, farthest_x)
         y = random.randint(1, farthest_y)
         return Room(x, y, width, height)
-        
+       
+    def check_intersections(self, new_room):
+        """ Return whether a given room intersects with any existing rooms in
+        the map.
+        """
+        for room in self.rooms:
+            if new_room.intersects(room):
+                return False
+        return True
             
 class Tile:
 
