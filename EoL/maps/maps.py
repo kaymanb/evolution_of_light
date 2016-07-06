@@ -1,4 +1,4 @@
-from features.features import Wall, EmptyFeature
+from features.features import Feature, Wall, EmptyFeature
 import random
 import curses
 
@@ -26,7 +26,7 @@ class LevelMap:
         for x in range(len(self.tiles)):
             for y in range(len(self.tiles[0])):
                 tile = self.tiles[x][y]
-                screen.addstr(y, x, tile.feature.sprite)
+                screen.addstr(y, x, tile.get_top_glyph())
 
         # Add these changes to the screen, but wait for doupdate() to render.
         screen.noutrefresh()
@@ -103,12 +103,20 @@ class Tile:
         wall.
         """
         self.feature = feature
+        self.char = None
 
     def blocks_movement(self):
         """ Return whether this tile blocks movement
         """
-       return self.feature.blocks_movement
-
+        return self.feature.blocks_movement
+    
+    def get_top_glyph(self):
+        """ Returns the glyph that should appear when this tile is drawn to the
+        screen.
+        """
+        if(self.char is not None):
+            return self.char.glyph
+        return self.feature.sprite
 
 class Rectangle:
     """ A Rectangluar Prism """

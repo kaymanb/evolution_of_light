@@ -1,4 +1,6 @@
 from levels.levels import Level
+from maps.maps import Room
+from chars.chars import Character
 import curses
 
 class InvalidMovementError(Exception):
@@ -21,7 +23,10 @@ class LitDGame:
         self.levels = [Level(x, y)]
         self.current_level = self.levels[0]
         
-        start_tile = self.current_level.
+        start_room = self.current_level.level_map.rooms[0]
+        (start_x, start_y) = start_room.list_floorspace()[0]
+        start_tile = self.current_level.level_map.get_tile(start_x, start_y)
+        self.player = Character(start_tile, '@')
 
         self.screen = screen
         
