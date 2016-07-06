@@ -1,4 +1,4 @@
-from features.features import Wall, EmptyFeature
+from features.features import Feature, Wall, EmptyFeature
 import curses
 
 
@@ -37,6 +37,12 @@ class Tile:
         wall.
         """
         self.feature = feature
+
+    def blocks_movement(self):
+        """ Return whether this tile blocks movement
+        """
+       return self.feature.blocks_movement
+
 
 class Rectangle:
 """ A Rectangluar Prism """

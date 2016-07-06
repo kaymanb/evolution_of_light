@@ -20,6 +20,9 @@ class LitDGame:
         self.y_size = y
         self.levels = [Level(self.x_size, self.y_size)]
         self.current_level = self.levels[0]
+        
+        start_tile = self.current_level.
+
         self.screen = screen
         
     def draw_game(self):
