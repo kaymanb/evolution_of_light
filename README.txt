@@ -24,7 +24,9 @@ will compose the floor.
 Items are objects that can interact with characters. They
 have various properties and when placed on a tile, fall into that tiles item
 list. ALL items can be applied for some sort of effect. Items all extend the
-Item class.
+Item class. Items have a no location associated with them, they are disperesed
+into the map using the LevelMap.add_item(x, y, item) method. Items can be
+picked up by characters using a similar method in the Character class.
 
 - The Characters
 Characters are objects that can interact with their environment. They can move,

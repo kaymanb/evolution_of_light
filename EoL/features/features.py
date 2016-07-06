@@ -1,4 +1,5 @@
 
+#TODO: Clean this module up, inheritance doesn't make sence.
 
 class Feature:
     """ A feature is the defining characteristic of a tile. This is the parent
@@ -23,7 +24,7 @@ class Wall(Feature):
         super().__init__(self.blocks_light, self.blocks_movement, self.sprite)
     
 class EmptyFeature(Feature):
-    """ An empty feature that emits both light and movement"""
+    """ An empty feature that omits both light and movement"""
 
     sprite = '.'
     blocks_light = False
