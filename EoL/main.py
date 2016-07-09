@@ -11,7 +11,7 @@ def main(screen):
     # Turn off blinking cursor.
     curses.curs_set(0)
     
-    main_game = game.LitDGame(80, 20, screen)
+    main_game = game.EoLGame(80, 20, screen)
     main_game.draw_game()
     curses.doupdate()
 
