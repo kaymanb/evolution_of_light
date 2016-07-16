@@ -37,5 +37,4 @@ GLOBAL TODO:
 - Rename all instance variables of "sprite" to glyph
 - Find better naming convention for generic modules ie: NOT game.game
 - Add return values to function docstrings
-
-- RETHINK MOVEMENT SHITS FUCKED
+- Refactor module organisation.
