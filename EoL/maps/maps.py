@@ -13,7 +13,7 @@ class LevelMap:
         """
         self.size_x = x
         self.size_y = y
-        self.tiles = [[ Tile(Wall()) for i in range(y)] for j in range(x)]
+        self.tiles = [[ Tile(j, i, Wall()) for i in range(y)] for j in range(x)]
 
     def get_tile(self, x, y):
         """ Returns the tile located at position (x, y) in the map
@@ -47,7 +47,7 @@ class RoomsMap(LevelMap):
         """
         self.rooms.append(room)
         for (x, y) in room.list_floorspace():
-            self.tiles[x][y] = Tile()
+            self.tiles[x][y] = Tile(x, y)
 
 class RandomRoomsMap(RoomsMap):
 
@@ -98,10 +98,12 @@ class Tile:
 
 #TODO: Add other variables to tile.
     
-    def __init__(self, feature = EmptyFeature()):
+    def __init__(self, x, y, feature = EmptyFeature()):
         """ Create a tile at position (x, y). By default this tile will be a
         wall.
         """
+        self.x = x
+        self.y = y
         self.feature = feature
         self.char = None
 
@@ -163,7 +165,7 @@ class Room(Rectangle):
     """ A room.
     """
     
-    floor_tile = Tile()
+    floor_feature = EmptyFeature()
 
     def list_floorspace(self):
         """Return a list of all coordinate pairs that are in this room.

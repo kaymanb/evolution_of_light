@@ -18,7 +18,7 @@ class EoLGame:
         
         start_room = self.current_level.level_map.rooms[0]
         (start_x, start_y) = start_room.list_floorspace()[0]
-        start_tile = self.current_level.level_map.get_tile(start_x, start_y)
+        start_tile = self.current_level.level_map.get_tile(start_x, start_y) 
         self.player = Character(start_tile, '@')
 
         self.screen = screen
