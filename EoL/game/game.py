@@ -15,11 +15,12 @@ class EoLGame:
         self.size_y = y
         self.levels = [Level(x, y)]
         self.current_level = self.levels[0]
+       
         
         start_room = self.current_level.level_map.rooms[0]
         (start_x, start_y) = start_room.list_floorspace()[0]
         start_tile = self.current_level.level_map.get_tile(start_x, start_y) 
-        self.player = Character(start_tile, '@')
+        self.player = Character(start_tile, '@', curses.color_pair(1))
 
         self.screen = screen
 

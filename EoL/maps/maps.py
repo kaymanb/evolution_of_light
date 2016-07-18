@@ -1,6 +1,7 @@
 from features.features import Feature, Wall, EmptyFeature
 import random
 import curses
+import math
 
 
 class LevelMap:
@@ -23,10 +24,9 @@ class LevelMap:
     def draw_map(self, screen):
         """ Draws the map to the input screen.
         """
-        for x in range(len(self.tiles)):
-            for y in range(len(self.tiles[0])):
-                tile = self.tiles[x][y]
-                screen.addstr(y, x, tile.get_top_glyph())
+        for row in self.tiles:
+            for tile in row:
+                tile.draw_tile(screen)
 
         # Add these changes to the screen, but wait for doupdate() to render.
         screen.noutrefresh()
@@ -35,6 +35,8 @@ class RoomsMap(LevelMap):
 
     MAX_ROOM_WIDTH = 15
     MAX_ROOM_HEIGHT = 10
+    MIN_ROOM_WIDTH = 3
+    MIN_ROOM_HEIGHT = 3
 
     def __init__(self, x, y):
         """ Create a map with rooms.
@@ -48,6 +50,52 @@ class RoomsMap(LevelMap):
         self.rooms.append(room)
         for (x, y) in room.list_floorspace():
             self.tiles[x][y] = Tile(x, y)
+
+    
+    def connect_rooms(self, room_a, room_b):
+        center_a = room_a.get_center()
+        center_b = room_b.get_center()
+        
+        self.create_diagonal_tunnel(center_a[0], center_a[1],
+                                    center_b[0], center_b[1])
+
+        # Connect with horizontal/vertical tunnels
+        #self.create_horz_tunnel(center_a[0], center_b[0], center_a[1])
+        #self.create_vert_tunnel(center_a[1], center_b[1], center_b[0])
+    
+    def create_diagonal_tunnel(self, x1, y1, x2, y2):
+                
+        dif_x = x2 - x1
+        dif_y = y2 - y1
+        if dif_x == 0:
+            return self.create_vert_tunnel(y1, y2, x1)
+        if dif_y == 0:
+            return self.create_horz_tunnel(x1, x2, y1)
+
+        step_h = dif_x / abs(dif_y)
+        step_v = dif_y / abs(dif_x)
+        
+        step_h = math.floor(step_h) if step_h < 0 else math.ceil(step_h)
+        step_v = math.floor(step_v) if step_v < 0 else math.ceil(step_v)
+        
+        step_dir_h = -1 if step_h < 0 else 1
+        step_dir_v = -1 if step_v < 0 else 1
+
+        for x in range(x1 + step_dir_h, x1 + step_h + step_dir_h, step_dir_h):
+            self.tiles[x][y1].feature = EmptyFeature()
+
+        for y in range(y1 + step_dir_v, y1 + step_v + step_dir_v, step_dir_v):
+            self.tiles[x1 + step_h][y].feature = EmptyFeature()
+
+        return self.create_diagonal_tunnel(x1 + step_h, y1 + step_v, x2, y2)
+    
+    def create_horz_tunnel(self, x1, x2, y):
+        for x in range(min(x1, x2), max(x1, x2) + 1):
+            self.tiles[x][y].feature = EmptyFeature()
+
+    def create_vert_tunnel(self, y1, y2, x):
+        for y in range(min(y1, y2), max(y1, y2) + 1):
+            self.tiles[x][y].feature = EmptyFeature()
 
 class RandomRoomsMap(RoomsMap):
 
@@ -71,11 +119,14 @@ class RandomRoomsMap(RoomsMap):
         
             self.add_room(new_room)
 
+            # Connect this room the last room that was added.
+            self.connect_rooms(new_room, self.rooms[len(self.rooms) - 2])
+
     def create_random_room(self):
         """ Create and return a random sized room at a random location.
         """
-        width = random.randint(3, self.MAX_ROOM_WIDTH)
-        height = random.randint(3, self.MAX_ROOM_HEIGHT)
+        width = random.randint(self.MIN_ROOM_WIDTH, self.MAX_ROOM_WIDTH)
+        height = random.randint(self.MIN_ROOM_HEIGHT, self.MAX_ROOM_HEIGHT)
 
         # We want the room we create to have walls all the way around it, hence
         # the added 1's in these four statements.
@@ -93,7 +144,7 @@ class RandomRoomsMap(RoomsMap):
             if new_room.intersects(room):
                 return False
         return True
-            
+    
 class Tile:
 
 #TODO: Add other variables to tile.
@@ -117,8 +168,12 @@ class Tile:
         screen.
         """
         if(self.char is not None):
-            return self.char.glyph
-        return self.feature.sprite
+            return self.char
+        return self.feature
+
+    def draw_tile(self, screen):
+        glyph = self.get_top_glyph()
+        screen.addstr(self.y, self.x, glyph.icon, glyph.color)
 
 class Rectangle:
     """ A Rectangluar Prism """
