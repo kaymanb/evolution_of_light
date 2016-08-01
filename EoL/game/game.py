@@ -25,7 +25,7 @@ class EoLGame:
         self.screen = screen
 
     def draw_game(self):
-        self.current_level.draw_all(self.screen)
+        self.current_level.draw_all(self.screen, self.player)
     
     # TODO: Move input logic into it's own class.
 

@@ -1,5 +1,6 @@
 from features.features import Feature, Wall, EmptyFeature
 from maps.tiles import Tile, Rectangle
+from maps.fov import ShadowCast
 import random
 import curses
 import math
@@ -22,16 +23,22 @@ class LevelMap:
         """
         return self.tiles[x][y]
 
-    def draw_map(self, screen):
+    def draw_map(self, screen, light_map):
         """ Draws the map to the input screen.
         """
         for row in self.tiles:
             for tile in row:
+                tile.in_fov = light_map[tile.x][tile.y] > 0
+
+                # Mark tiles that have been seen as explored.
+                if tile.in_fov:
+                    tile.explored = True
+
                 tile.draw_tile(screen)
 
         # Add these changes to the screen, but wait for doupdate() to render.
         screen.noutrefresh()
-
+    
 class RoomsMap(LevelMap):
 
     MAX_ROOM_WIDTH = 15

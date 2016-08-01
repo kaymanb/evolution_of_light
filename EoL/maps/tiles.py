@@ -15,7 +15,7 @@ class Tile:
         self.feature = feature
         self.char = None
         self.explored = False
-        self.in_fov = True
+        self.in_fov = False
 
     def draw_tile(self, screen):
         glyph = self.get_top_glyph()
@@ -34,7 +34,7 @@ class Tile:
             return self.feature
         else:
             if self.explored:
-                if isintance(self.feature, Wall):
+                if isinstance(self.feature, Wall):
                     return self.feature
             return Glyph(" ", curses.color_pair(0))
 
