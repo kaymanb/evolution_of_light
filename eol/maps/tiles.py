@@ -16,6 +16,7 @@ class Tile:
         self.char = None
         self.explored = False
         self.in_fov = False
+        self.brightness = 0
 
     def draw_tile(self, screen):
         glyph = self.get_top_glyph()

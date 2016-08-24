@@ -16,7 +16,7 @@ def main(screen):
     curses.doupdate()
 
     while(True):
-        state = main_game.handle_input()
+        state = main_game.do_turn()
         if state == 'quit':
             break
         

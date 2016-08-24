@@ -2,7 +2,7 @@ from maps.tiles import Tile
 from features.features import Feature
 
 class ShadowCast:
-
+    
     def __init__(self, tiles, radius):
         self.tile_map = tiles
         self.width = len(tiles)
@@ -21,7 +21,11 @@ class ShadowCast:
         self.light_map = None
 
     def calculate_fov(self, init_x, init_y):
-        
+        # Returns a map of real numbers in [0, 1], which represent the amount
+        # of light that a tile should have, 0 being black, 1 being completely
+        # lit. These are calculated based on the distance from the inital tile,
+        # whos brightness value will always be 1.
+
         self.x = init_x
         self.y = init_y
         self.light_map = [[0 for i in range(self.height)] for j in range(self.width)]
@@ -75,7 +79,7 @@ class ShadowCast:
                         continue
                     else:
                         blocked = False
-                        star_slope = new_start
+                        start_slope = new_start
                 else:
 
                     # Hit a light blocking feature inside the fov.

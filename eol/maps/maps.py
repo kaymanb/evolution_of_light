@@ -29,6 +29,7 @@ class LevelMap:
         for row in self.tiles:
             for tile in row:
                 tile.in_fov = light_map[tile.x][tile.y] > 0
+                tile.brightness = light_map[tile.x][tile.y]
 
                 # Mark tiles that have been seen as explored.
                 if tile.in_fov:
@@ -51,6 +52,13 @@ class RoomsMap(LevelMap):
         """
         super().__init__(x, y)
         self.rooms = []
+    
+    def get_a_tile(self):
+        """ Get an empty tile inside of a random room
+        """
+        room_index = random.randint(0, len(self.rooms) - 1)
+        (x, y) = self.rooms[room_index].list_floorspace()[0]
+        return self.tiles[x][y]
 
     def add_room(self, room):
         """ Add the input room to the map.
