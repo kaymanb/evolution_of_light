@@ -23,4 +23,3 @@ class NPC(Character):
         except InvalidMovementError:
             self.wander(level_map)
 
-        

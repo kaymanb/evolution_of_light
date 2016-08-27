@@ -15,7 +15,6 @@ class Tile:
         self.feature = feature
         self.char = None
         self.explored = False
-        self.in_fov = False
         self.brightness = 0
 
     def draw_tile(self, screen):
@@ -29,7 +28,7 @@ class Tile:
         Note that this can be a feature, a character, or even just a plain
         glyph object.
         """
-        if self.in_fov:
+        if self.brightness > 0:
             if self.char is not None:
                 return self.char
             return self.feature

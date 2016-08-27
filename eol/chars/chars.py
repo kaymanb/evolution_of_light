@@ -18,7 +18,7 @@ class Character(Glyph):
         self.inventory =[]
 
         self.tile.explored = True
-        
+        self.sight_map = None # Maybe set to empty object instead of None?      
 
     def move(self, new_tile):
         """ Move this character to a new tile.
@@ -37,5 +37,8 @@ class Character(Glyph):
 
         self.tile.explored = True
     
-            
+    def can_see(tile):
+        """ Returns whether this character can see the input tile.
+        """
+        return self.sight_map[tile.x][tile.y] > 0
     

@@ -4,10 +4,6 @@ from game.input import InputHandler
 from chars.chars import Character
 import curses
 
-def init_colors():
-    curses.init_pair(1, curses.COLOR_YELLOW, curses.COLOR_BLACK)
-    curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK)
-
 class EoLGame:
     
     def __init__(self, x, y, screen):
@@ -36,6 +32,7 @@ class EoLGame:
     def run_npcs(self):
         for npc in self.current_level.npcs:
             npc.wander(self.current_level.level_map)
+            #npc.sentry(self.current_level.level_map)
 
     def handle_input(self):
         key = self.screen.getch()

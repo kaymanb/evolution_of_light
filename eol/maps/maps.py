@@ -8,7 +8,6 @@ import math
 
 class LevelMap:
     
-
     def __init__(self, x, y):
         """ Create an x by y level map, completely filled with walls. 
 
@@ -23,16 +22,16 @@ class LevelMap:
         """
         return self.tiles[x][y]
 
-    def draw_map(self, screen, light_map):
-        """ Draws the map to the input screen.
+    def draw_map(self, screen, char):
+        """ Draws the map to the input screen, as though it is from the
+        perspective of the input char.
         """
         for row in self.tiles:
             for tile in row:
-                tile.in_fov = light_map[tile.x][tile.y] > 0
-                tile.brightness = light_map[tile.x][tile.y]
+                tile.brightness = char.sight_map[tile.x][tile.y]
 
                 # Mark tiles that have been seen as explored.
-                if tile.in_fov:
+                if tile.brightness > 0:
                     tile.explored = True
 
                 tile.draw_tile(screen)
