@@ -35,6 +35,7 @@ class LevelMap:
                 tile.brightness = char.sight_map[tile.x][tile.y]
 
                 # Mark tiles that have been seen as explored.
+                # TODO: Only do this for explorable tiles.
                 if tile.brightness > 0:
                     tile.explored = True
 

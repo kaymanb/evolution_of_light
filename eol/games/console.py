@@ -19,5 +19,5 @@ class ConsoleManager:
     def log(self, msg):
         
         self.win.erase()
-        self.win.addstr(0, 0, msg)
+        self.win.addstr(0, 1, msg)
         self.win.refresh()

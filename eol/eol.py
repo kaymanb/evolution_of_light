@@ -17,11 +17,14 @@ def main(screen):
     """
     constants.colors.init_colors()
 
+    display_welcome()
 
     # Turn off blinking cursor.
     curses.curs_set(0)
+
     main_game = EoLGame(GAME_WIDTH, GAME_HEIGHT, screen)
     console.init_console(0, GAME_HEIGHT + 1, GAME_WIDTH, CONSOLE_HEIGHT)
+    console.STD.win.overlay(screen)
 
     main_game.draw_game() 
     console.STD.log("Welcome to EoL!")
@@ -46,7 +49,19 @@ def parse_arguments():
 
     constants.globals.WIZARD_MODE = args.wizard_mode
 
+def display_welcome():
+    win = curses.newwin(GAME_HEIGHT + CONSOLE_HEIGHT, GAME_WIDTH)
+    msg = "Welcome to Evolution of Light!"
+    prompt = "Press any key to begin."
 
+    msg_start_x = (GAME_WIDTH - len(msg)) // 2
+    msg_start_y = (GAME_HEIGHT + CONSOLE_HEIGHT) // 2
+    prompt_start_x = (GAME_WIDTH - len(prompt)) // 2
+
+    win.addstr(msg_start_y, msg_start_x, msg)
+    win.addstr(msg_start_y + 1, prompt_start_x, prompt)
+    win.getch()
+    win.erase()
 
 # Run main. curses.wrapper() initializes noecho, cbreak and keypad(1)
 if __name__ == '__main__':
