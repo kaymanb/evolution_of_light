@@ -9,6 +9,9 @@ MOVEMENT_KEYS  = frozenset([curses.KEY_UP, curses.KEY_DOWN,
 QUIT_KEY = ord('q')
 
 class InputHandler:
+    """ Class for handling user input. Tells the player and the screen what
+    action to take based on which key is pressed.
+    """
 
     def __init__(self, screen, level, player):
         self.game_screen = screen

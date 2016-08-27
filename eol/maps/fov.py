@@ -2,7 +2,53 @@ from maps.tiles import Tile
 from features.features import Feature
 
 class ShadowCast:
+    """ An implementation of ShadowCasting FOV. 
     
+    Contains methods to construct a light_map of values in [0, 1] representing
+    the brightness of the corresponging (x, y) tile in the map, based on the
+    position on the inital input tile. The initial light_map is given all
+    values of 0 representing comlete darkness.
+
+    Shadow Casting works as follows. The area in a given radius around the
+    inital tile is divided into 8 octants, as if you were slicing it like a
+    pizza. 
+                                    \  |  /
+                                     \ | /
+                                   ___\|/___
+                                      /|\
+                                     / | \
+                                    /  |  \
+    
+    To calculate brightness values, starting at the inital tile, each
+    octant is scanned line by line, begining with the smallest line right next
+    to the inital tile. As the line is scanned, empty tiles are lit up with a
+    brightness according to how close they are to the initials tile. If a tile
+    that blocks light is reached, the scan makes a recursive call to scan the
+    next line, but stopping when the scan reaches the slop of the previously
+    blocked tile. The original scan then skips over any more blocking tiles
+    until it reaches one that isn't blocked. At this point it continues
+    scanning but records the slope that it startup up at. When it reaches the
+    end of the row another recursive call is made, this time starting at the
+    slope that was recorded at the end of the section of blocked tiles.
+
+    This process is repeated for each of the 8 octants, creating a total FOV of
+    a given radius.
+
+                                   \->    ->|
+                                    \->   ->|
+                                     \->  ->|
+                                      \->#->|
+                                       \--->|
+                                        \-->|
+                                         \->|
+
+    As a result of this algorithm, each tile that is lit up is only ever
+    scanned once, and moreover, tiles that should remain dark are never scanned
+    at all. By recording the slope of where the scan hits a blocked tile, the
+    algorithm "casts a shadow" behind it, maintaining the slope of the shadow
+    relative to the initial tile. 
+    """
+
     def __init__(self, tiles, radius):
         self.tile_map = tiles
         self.width = len(tiles)
@@ -21,10 +67,11 @@ class ShadowCast:
         self.light_map = None
 
     def calculate_fov(self, init_x, init_y):
-        # Returns a map of real numbers in [0, 1], which represent the amount
-        # of light that a tile should have, 0 being black, 1 being completely
-        # lit. These are calculated based on the distance from the inital tile,
-        # whos brightness value will always be 1.
+        """Returns a map of real numbers in [0, 1], which represent the amount
+        of light that a tile should have, 0 being black, 1 being completely
+        lit. These are calculated based on the distance from the inital tile,
+        whos brightness value will always be 1.
+        """
 
         self.x = init_x
         self.y = init_y
@@ -39,6 +86,11 @@ class ShadowCast:
         return self.light_map
 
     def cast_light(self, start_slope, end_slope, row, xx, xy, yx, yy):
+        """ Sets the values of the light_map to the appropiate brightness,
+        scanning from the start_slope to the end_slope in a given row. Values
+        xx, xy, yx, yy are multipliers that transform the delta values and scan
+        direction to match the a certain octant. 
+        """
         if start_slope < end_slope:
             return
         # Boolean for scanning a sequence of blocked tiles.
@@ -46,7 +98,7 @@ class ShadowCast:
         distance = row
         radius_squared = self.radius * self.radius
         new_start = 0
-
+        
         while distance <= self.radius and not blocked:
             dy = -distance
             for dx in range(-distance, 1):
@@ -57,7 +109,9 @@ class ShadowCast:
                 left_slope = (dx - 0.5) / (dy + 0.5)
                 right_slope = (dx + 0.5) / (dy - 0.5)
                 
-
+                # If the current tile is not within the map, or the slope at
+                # the current tile is outside where the start slope should be,
+                # move on to the next tile.
                 if not (cx >= 0 and cy >= 0 and cx < self.width and cy <
                     self.height) or start_slope < right_slope:
                     continue

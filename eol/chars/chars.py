@@ -17,6 +17,7 @@ class Character(Glyph):
         tile.char = self
         self.inventory =[]
 
+
         self.tile.explored = True
         self.sight_map = None # Maybe set to empty object instead of None?      
 

@@ -3,7 +3,10 @@ from features.glyphs import Glyph
 import curses
 
 class Tile:
+    """ Tile object that sits inside a map.
 
+    Holds a single feature and a single character. 
+    """
 #TODO: Add other variables to tile.
     
     def __init__(self, x, y, feature = EmptyFeature()):
@@ -18,6 +21,8 @@ class Tile:
         self.brightness = 0
 
     def draw_tile(self, screen):
+        """ Draws the tile to the screen.
+        """
         glyph = self.get_top_glyph()
         screen.addstr(self.y, self.x, glyph.icon, glyph.color)
 

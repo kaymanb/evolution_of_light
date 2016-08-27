@@ -1,6 +1,6 @@
-###             ###
-# Global Constants#
-###             ###
+###              ###
+# Global Constants #
+###              ###
 
 # Wizard Mode:
 #

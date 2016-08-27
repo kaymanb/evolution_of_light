@@ -1,4 +1,6 @@
-# Errors
+###    ###
+# Errors #
+###    ###
 
 class InvalidMovementError(Exception):
     """ Exception for attempting to move to invalid tile.

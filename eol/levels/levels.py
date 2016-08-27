@@ -8,6 +8,8 @@ import random
 import curses
 
 class Level:
+    """ Generic Level class that contains a map and a list of npcs.
+    """
 
     def __init__(self, x, y):
         self.level_map = maps.RandomRoomsMap(x, y, 7)
@@ -34,7 +36,10 @@ class Level:
         self.level_map.draw_map(screen, player)
 
     def generate_npcs(self):
-        
+        """ Generate npcs for this level. Can be overriden by sub classes to
+        generate the appropiate npcs.
+        """
+
         npc_start_tile = self.level_map.get_a_tile()
 
         npc = NPC(npc_start_tile, 'M', curses.color_pair(2))

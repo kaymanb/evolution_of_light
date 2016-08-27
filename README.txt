@@ -38,6 +38,6 @@ GLOBAL TODO:
 - Find better naming convention for generic modules ie: NOT game.game
 - Add return values to function docstrings
 - Refactor module organisation.
-- Add GODMODE that lets you see everything
-- Rename Errors
-- Comlpete game.constants.colors
+- Comlpeteconstants.colors
+- Make generic npc mehtod do_turn which will call the appropriate action for
+  each class of npc. 

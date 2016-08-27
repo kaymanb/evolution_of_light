@@ -4,11 +4,18 @@ import random
 import curses
 
 class NPC(Character):
+    """ A generic NPC class. Contains several basic methods for how they should
+    interact with the player.
+    """
 
     def wander(self, level_map):
+        """ NPC will wander around aimlessly. Each turn grabs a random tile
+        around it and moves there. NPC will randomly attack it the player is
+        standing next to it.
+        """
         move_horz = random.randint(0, 1)
     
-        #TODO: Refactor this with speed
+        #TODO: Refactor to be more efficent that getting until != 0
         distance = 0
         while distance == 0:
             distance = random.randint(-1, 1)

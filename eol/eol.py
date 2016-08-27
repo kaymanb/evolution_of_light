@@ -24,7 +24,12 @@ def main(screen):
             break
 
 def parse_arguments():
+    """ Parse command line arguments and prepare constants.gloabals
+    appropriately.
+    """
     parser = argparse.ArgumentParser(description="Play Evolution of Light.")
+    
+    # Add argument for wizard mode.
     parser.add_argument("-w", "--wizard_mode",
                         action="store_true",
                         help="Start the game in Wizard Mode.")

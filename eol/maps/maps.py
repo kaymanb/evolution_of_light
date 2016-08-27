@@ -7,7 +7,10 @@ import math
 
 
 class LevelMap:
-    
+    """ Generic Map that the game is played on. Contains methods for accessing
+    tiles and drawing the map to a screen.
+    """
+
     def __init__(self, x, y):
         """ Create an x by y level map, completely filled with walls. 
 
@@ -40,6 +43,9 @@ class LevelMap:
         screen.noutrefresh()
     
 class RoomsMap(LevelMap):
+    """ A Map filled with rooms. Contains methods for creating rooms along with
+    tunnels to connect them.
+    """
 
     MAX_ROOM_WIDTH = 15
     MAX_ROOM_HEIGHT = 10
@@ -68,6 +74,8 @@ class RoomsMap(LevelMap):
 
     
     def connect_rooms(self, room_a, room_b):
+        """ Connects room_a to room_b VIA a tunnel.
+        """
         center_a = room_a.get_center()
         center_b = room_b.get_center()
         
@@ -79,6 +87,9 @@ class RoomsMap(LevelMap):
         #self.create_vert_tunnel(center_a[1], center_b[1], center_b[0])
     
     def create_diagonal_tunnel(self, x1, y1, x2, y2):
+        """ Create a diagonal tunnel from the (x1, y1) tile in the map
+        the the (x2, y2) tile.
+        """
                 
         dif_x = x2 - x1
         dif_y = y2 - y1
@@ -105,14 +116,21 @@ class RoomsMap(LevelMap):
         return self.create_diagonal_tunnel(x1 + step_h, y1 + step_v, x2, y2)
     
     def create_horz_tunnel(self, x1, x2, y):
+        """ Create a horizontal tunnel from the (x1, y) tile to (x2, y).
+        """
         for x in range(min(x1, x2), max(x1, x2) + 1):
             self.tiles[x][y].feature = EmptyFeature()
 
     def create_vert_tunnel(self, y1, y2, x):
+        """ Create  vertical tunnel from the (x, y1) tile to (x, y2).
+        """
         for y in range(min(y1, y2), max(y1, y2) + 1):
             self.tiles[x][y].feature = EmptyFeature()
 
 class RandomRoomsMap(RoomsMap):
+    """ A map with randomly generated rooms. Constructor takes in the number of
+    rooms to generate as input.
+    """
 
     def __init__(self, x, y, num_rooms):
         """ Creates a map with a given amount of randomly generated rooms.
