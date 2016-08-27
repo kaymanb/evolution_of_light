@@ -1,7 +1,5 @@
-from maps.maps import Tile
 from features.glyphs import Glyph
-from features.features import Feature
-from game.errors import InvalidMovementError
+import games.errors as errors
 import curses
 
 class Character(Glyph):
@@ -30,7 +28,7 @@ class Character(Glyph):
             #raise InvalidMovementError("That tile looks a bit small for two.")
 
         if (new_tile.feature.blocks_movement):
-            raise InvalidMovementError("Tile Blocks Movement")
+            raise errors.InvalidMovementError("Tile Blocks Movement")
         
         self.tile.char = None
         new_tile.char = self

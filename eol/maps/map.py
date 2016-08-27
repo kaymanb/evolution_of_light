@@ -1,6 +1,6 @@
-from features.features import Feature, Wall, EmptyFeature
-from maps.tiles import Tile, Rectangle
-from maps.fov import ShadowCast
+from maps.tiles import Tile
+import features.feature as feat
+import maps.fov
 import random
 import curses
 import math
@@ -18,7 +18,7 @@ class LevelMap:
         """
         self.size_x = x
         self.size_y = y
-        self.tiles = [[ Tile(j, i, Wall()) for i in range(y)] for j in range(x)]
+        self.tiles = [[ Tile(j, i, feat.Wall()) for i in range(y)] for j in range(x)]
 
     def get_tile(self, x, y):
         """ Returns the tile located at position (x, y) in the map
@@ -108,10 +108,10 @@ class RoomsMap(LevelMap):
         step_dir_v = -1 if step_v < 0 else 1
 
         for x in range(x1 + step_dir_h, x1 + step_h + step_dir_h, step_dir_h):
-            self.tiles[x][y1].feature = EmptyFeature()
+            self.tiles[x][y1].feature = feat.EmptyFeature()
 
         for y in range(y1 + step_dir_v, y1 + step_v + step_dir_v, step_dir_v):
-            self.tiles[x1 + step_h][y].feature = EmptyFeature()
+            self.tiles[x1 + step_h][y].feature = feat.EmptyFeature()
 
         return self.create_diagonal_tunnel(x1 + step_h, y1 + step_v, x2, y2)
     
@@ -119,13 +119,13 @@ class RoomsMap(LevelMap):
         """ Create a horizontal tunnel from the (x1, y) tile to (x2, y).
         """
         for x in range(min(x1, x2), max(x1, x2) + 1):
-            self.tiles[x][y].feature = EmptyFeature()
+            self.tiles[x][y].feature = feat.EmptyFeature()
 
     def create_vert_tunnel(self, y1, y2, x):
         """ Create  vertical tunnel from the (x, y1) tile to (x, y2).
         """
         for y in range(min(y1, y2), max(y1, y2) + 1):
-            self.tiles[x][y].feature = EmptyFeature()
+            self.tiles[x][y].feature = feat.EmptyFeature()
 
 class RandomRoomsMap(RoomsMap):
     """ A map with randomly generated rooms. Constructor takes in the number of
@@ -178,11 +178,11 @@ class RandomRoomsMap(RoomsMap):
                 return False
         return True
     
-class Room(Rectangle):
+class Room(maps.tiles.Rectangle):
     """ A room.
     """
     
-    floor_feature = EmptyFeature()
+    floor_feature = feat.EmptyFeature()
 
     def list_floorspace(self):
         """Return a list of all coordinate pairs that are in this room.

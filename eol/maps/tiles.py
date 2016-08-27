@@ -1,5 +1,5 @@
-from features.features import Feature, Wall, EmptyFeature
 from features.glyphs import Glyph
+import features.feature as feat
 import curses
 
 class Tile:
@@ -9,7 +9,7 @@ class Tile:
     """
 #TODO: Add other variables to tile.
     
-    def __init__(self, x, y, feature = EmptyFeature()):
+    def __init__(self, x, y, feature = feat.EmptyFeature()):
         """ Create a tile at position (x, y). By default this tile will be a
         wall.
         """
@@ -39,7 +39,7 @@ class Tile:
             return self.feature
         else:
             if self.explored:
-                if isinstance(self.feature, Wall):
+                if isinstance(self.feature, feat.Wall):
                     return self.feature
             return Glyph(" ", curses.color_pair(0))
 
@@ -90,7 +90,7 @@ class Room(Rectangle):
     """ A room.
     """
     
-    floor_feature = EmptyFeature()
+    floor_feature = feat.EmptyFeature()
 
     def list_floorspace(self):
         """Return a list of all coordinate pairs that are in this room.

@@ -1,4 +1,5 @@
-import game.game
+from games.game import EoLGame
+from levels.level import Level
 import constants.colors
 import constants.globals
 import curses
@@ -14,7 +15,7 @@ def main(screen):
     # Turn off blinking cursor.
     curses.curs_set(0)
     
-    main_game = game.game.EoLGame(80, 20, screen)
+    main_game = EoLGame(80, 20, screen)
     main_game.draw_game()
     curses.doupdate()
 

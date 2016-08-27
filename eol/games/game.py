@@ -1,7 +1,9 @@
-from levels.levels import Level
-from maps.maps import Room
-from game.input import InputHandler
-from chars.chars import Character
+from games.input import InputHandler
+from chars.char import Character
+from levels.level import Level
+from features.stairs import StairwayDown
+import maps.map as maps
+import features.feature as feat
 import curses
 
 class EoLGame:
@@ -20,6 +22,7 @@ class EoLGame:
         start_room = self.current_level.level_map.rooms[0]
         (start_x, start_y) = start_room.list_floorspace()[0]
         start_tile = self.current_level.level_map.get_tile(start_x, start_y) 
+        start_tile.feature = StairwayDown()
         self.player = Character(start_tile, '@', curses.color_pair(1))
 
         self.screen = screen
@@ -47,7 +50,7 @@ class EoLGame:
         """ Handle user input, allowing the player to perform an action.
         """
         key = self.screen.getch()
-        new = InputHandler(self.screen, self.current_level,self.player)
+        new = InputHandler(self)
         state = new.handle_input(key)
 
         self.draw_game()

@@ -1,5 +1,5 @@
-from chars.chars import Character
-from game.errors import InvalidMovementError
+from chars.char import Character
+import games.errors as errors
 import random
 import curses
 
@@ -27,6 +27,6 @@ class NPC(Character):
 
         try:
             self.move(new_tile)
-        except InvalidMovementError:
+        except errors.InvalidMovementError:
             self.wander(level_map)
 

@@ -1,9 +1,8 @@
-from maps.fov import ShadowCast
-from features.features import EmptyFeature
-from chars.npc import NPC
 from maps.tiles import Tile
+import chars.npc
+import maps.fov
+import maps.map
 import constants.globals
-import maps.maps as maps
 import random
 import curses
 
@@ -12,9 +11,9 @@ class Level:
     """
 
     def __init__(self, x, y):
-        self.level_map = maps.RandomRoomsMap(x, y, 7)
+        self.level_map = maps.map.RandomRoomsMap(x, y, 7)
         self.objects = []
-        self.fov = ShadowCast(self.level_map.tiles, 7)
+        self.fov = maps.fov.ShadowCast(self.level_map.tiles, 7)
         self.npcs = []
         self.generate_npcs()
 
@@ -42,7 +41,7 @@ class Level:
 
         npc_start_tile = self.level_map.get_a_tile()
 
-        npc = NPC(npc_start_tile, 'M', curses.color_pair(2))
+        npc = chars.npc.NPC(npc_start_tile, 'M', curses.color_pair(2))
         self.npcs.append(npc)
 
         

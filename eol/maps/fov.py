@@ -1,5 +1,5 @@
+from features.feature import Feature
 from maps.tiles import Tile
-from features.features import Feature
 
 class ShadowCast:
     """ An implementation of ShadowCasting FOV. 
@@ -34,13 +34,13 @@ class ShadowCast:
     This process is repeated for each of the 8 octants, creating a total FOV of
     a given radius.
 
-                                   \->    ->|
-                                    \->   ->|
-                                     \->  ->|
-                                      \->#->|
-                                       \--->|
-                                        \-->|
-                                         \->|
+                                 \->    ->|
+                                  \->   ->|
+                                   \->  ->|
+                                    \->#->|
+                                     \--->|
+                                      \-->|
+                                       \->|
 
     As a result of this algorithm, each tile that is lit up is only ever
     scanned once, and moreover, tiles that should remain dark are never scanned

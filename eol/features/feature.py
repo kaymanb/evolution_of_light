@@ -1,6 +1,5 @@
 from features.glyphs import Glyph
 import curses
-#TODO: Clean this module up, inheritance doesn't make sence
 
 class Feature(Glyph):
     """ A feature is the defining characteristic of a tile. This is the parent
@@ -18,19 +17,20 @@ class Feature(Glyph):
 class Wall(Feature):
     """ A Wall feature that blocks both light and movement"""
 
-    sprite = '#'
+    icon = '#'
     blocks_light = True
     blocks_movement = True
     
     def __init__(self):
-        super().__init__(self.blocks_light, self.blocks_movement, self.sprite)
+        super().__init__(self.blocks_light, self.blocks_movement, self.icon)
     
 class EmptyFeature(Feature):
     """ An empty feature that omits both light and movement"""
 
-    sprite = '.'
+    icon = '.'
     blocks_light = False
     blocks_movement = False
 
     def __init__(self):
-        super().__init__(self.blocks_light, self.blocks_movement, self.sprite)
+        super().__init__(self.blocks_light, self.blocks_movement, self.icon)
+
