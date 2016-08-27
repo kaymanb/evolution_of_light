@@ -20,7 +20,10 @@ class Level:
     def draw_all(self, screen, player):
         """ Render everything in this level to the input screen.
         """
- 
+
+        # TODO: Maybe creating sight maps shouldn't happen when drawing to the
+        # screen?
+
         # Give player unbroken vision in wizard mode.
         if constants.globals.WIZARD_MODE:
             height = self.level_map.size_y

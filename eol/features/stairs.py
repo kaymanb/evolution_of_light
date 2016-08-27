@@ -26,6 +26,7 @@ class Stairway(Feature):
         if index == len(levels) - 1:
             player_coords = (player.tile.x, player.tile.y) 
             good_level = False
+            
             while not good_level:
                 new_level = lvls.Level(current_level.level_map.size_x,
                                current_level.level_map.size_y)
@@ -35,11 +36,16 @@ class Stairway(Feature):
                         good_level = True
             start_tile = new_level.level_map.get_tile(player.tile.x,
                                                         player.tile.y)
+            
+            # Place a stairway back up where the player comes down.
             start_tile.feature = features.stairs.StairwayUp()
-
             levels.append(new_level)
+
+        # If there already exists another level below the player, just move
+        # down to that one.
         else:
             new_level = levels[index + 1]
+
         tile = new_level.level_map.get_tile(player.tile.x, player.tile.y)
         player.move(tile)
         return (levels, levels.index(new_level))
@@ -50,7 +56,8 @@ class Stairway(Feature):
         Leaves the previous level in it's current state. 
         """
         index = levels.index(current_level)
-
+        
+        # If the player is on the top level, don't allow any further climbing.
         if index == 0:
             return (levels, index)
         

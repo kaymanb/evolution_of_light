@@ -3,6 +3,7 @@ from chars.char import Character
 from levels.level import Level
 from features.stairs import StairwayDown
 import maps.map as maps
+import games.console as console
 import features.feature as feat
 import curses
 
@@ -15,9 +16,11 @@ class EoLGame:
     def __init__(self, x, y, screen):
         """ Create an instance of the game with an x by y map.    
         """
+    
+        # A stack of levels in the current dungeon.
         self.levels = [Level(x, y)]
         self.current_level = self.levels[0]
-       
+         
         
         start_room = self.current_level.level_map.rooms[0]
         (start_x, start_y) = start_room.list_floorspace()[0]
@@ -49,9 +52,9 @@ class EoLGame:
         """ Handle user input, allowing the player to perform an action.
         """
         key = self.screen.getch()
+        
+        # TODO: Maybe don't reinstaniate this every turn.
         new = InputHandler(self)
         state = new.handle_input(key)
-
         self.draw_game()
-        curses.doupdate()
         return state

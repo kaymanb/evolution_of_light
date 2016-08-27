@@ -39,10 +39,7 @@ class LevelMap:
                     tile.explored = True
 
                 tile.draw_tile(screen)
-
-        # Add these changes to the screen, but wait for doupdate() to render.
-        screen.noutrefresh()
-    
+ 
 class RoomsMap(LevelMap):
     """ A Map filled with rooms. Contains methods for creating rooms along with
     tunnels to connect them.

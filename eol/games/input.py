@@ -2,6 +2,7 @@ from maps.tiles import Tile
 from chars.char import Character
 from games.errors import InvalidMovementError
 import features.feature as feat
+import games.console as console
 import features.stairs
 import curses
 
@@ -26,6 +27,7 @@ class InputHandler:
         """
         try:
             if key in MOVEMENT_KEYS:
+
                 old_tile = self.player.tile
                 new_tile = self.handle_movement(key)
                 self.player.move(new_tile)
@@ -33,9 +35,11 @@ class InputHandler:
             
             elif key == CLIMB_DOWN:
                 if isinstance(self.player.tile.feature, features.stairs.StairwayDown):
+                    console.STD.log("You climb down the staircase...")
                     self.handle_staircase(self.player.tile.feature)
            
             elif key == CLIMB_UP:
+                console.STD.log("You climb up the staircase...")
                 if isinstance(self.player.tile.feature, features.stairs.StairwayUp):
                     self.handle_staircase(self.player.tile.feature)
         
@@ -43,9 +47,13 @@ class InputHandler:
                 curses.endwin()
                 return 'quit'
         except InvalidMovementError:
+            console.STD.log("You can't walk there!")
             pass
     
     def handle_movement(self, key):
+        """ Returns a new tile for the player to move to, based on which key
+            was pressed.
+        """
         tile_map = self.level.level_map
         tile = self.player.tile
         x = None
@@ -65,6 +73,10 @@ class InputHandler:
         return tile_map.get_tile(x, y)
 
     def handle_staircase(self, staircase):
+        """ Helper function for moving a player up or down a staircase. Creates
+        the new levels stack and then moves the player accordingly.
+        """
+
         (levels, index) = staircase.climb(self.game.levels, self.level,
                                                             self.player)
         self.game.levels = levels
