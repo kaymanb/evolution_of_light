@@ -1,5 +1,6 @@
 from maps.tiles import Tile
 import features.feature as feat
+import features.stairs
 import maps.fov
 import random
 import curses
@@ -137,7 +138,7 @@ class RandomRoomsMap(RoomsMap):
         """
         super().__init__(x, y)
         self.generate_rooms(num_rooms)
-                    
+ 
     def generate_rooms(self, num_rooms):
         """ Populate the map with a given number of randomly generated rooms.
         """
@@ -151,9 +152,15 @@ class RandomRoomsMap(RoomsMap):
                 valid_room = result
         
             self.add_room(new_room)
-
+            
             # Connect this room the last room that was added.
             self.connect_rooms(new_room, self.rooms[len(self.rooms) - 2])
+
+        # Add a staircase to the last room that was generated.
+        room = self.rooms[len(self.rooms) - 1]
+        (x, y) = room.get_center()
+        tile = self.tiles[x][y]
+        tile.feature = features.stairs.StairwayDown()
 
     def create_random_room(self):
         """ Create and return a random sized room at a random location.

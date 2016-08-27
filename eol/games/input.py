@@ -1,5 +1,4 @@
 from maps.tiles import Tile
-from levels.level import Level
 from chars.char import Character
 from games.errors import InvalidMovementError
 import features.feature as feat

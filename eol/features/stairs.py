@@ -1,5 +1,5 @@
 from features.feature import Feature
-from levels.level import Level
+import levels.level as lvls
 import features.stairs
 
 class Stairway(Feature):
@@ -27,7 +27,7 @@ class Stairway(Feature):
             player_coords = (player.tile.x, player.tile.y) 
             good_level = False
             while not good_level:
-                new_level = Level(current_level.level_map.size_x,
+                new_level = lvls.Level(current_level.level_map.size_x,
                                current_level.level_map.size_y)
                 rooms = new_level.level_map.rooms
                 for room in rooms:
@@ -36,6 +36,7 @@ class Stairway(Feature):
             start_tile = new_level.level_map.get_tile(player.tile.x,
                                                         player.tile.y)
             start_tile.feature = features.stairs.StairwayUp()
+
             levels.append(new_level)
         else:
             new_level = levels[index + 1]
