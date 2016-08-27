@@ -21,12 +21,11 @@ def main(screen):
     # Turn off blinking cursor.
     curses.curs_set(0)
     main_game = EoLGame(GAME_WIDTH, GAME_HEIGHT, screen)
-    main_game.draw_game()
-    
-    console.init_console(0, GAME_HEIGHT + 1, GAME_WIDTH,
-                                                        CONSOLE_HEIGHT)
-    curses.doupdate()
+    console.init_console(0, GAME_HEIGHT + 1, GAME_WIDTH, CONSOLE_HEIGHT)
 
+    main_game.draw_game() 
+    console.STD.log("Welcome to EoL!")
+    
     while(True):
         state = main_game.do_turn()
         curses.doupdate()

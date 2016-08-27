@@ -47,7 +47,7 @@ class InputHandler:
                 curses.endwin()
                 return 'quit'
         except InvalidMovementError:
-            console.STD.log("You can't walk there!")
+            curses.beep()
             pass
     
     def handle_movement(self, key):

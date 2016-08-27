@@ -39,7 +39,7 @@ class Tile:
             return self.feature
         else:
             if self.explored:
-                if isinstance(self.feature, feat.Wall):
+                if isinstance(self.feature, feat.Explorable):
                     return self.feature
             return Glyph(" ", curses.color_pair(0))
 

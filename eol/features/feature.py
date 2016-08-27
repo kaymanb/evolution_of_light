@@ -1,6 +1,11 @@
 from features.glyphs import Glyph
 import curses
 
+class Explorable():
+    
+    explorable = True
+
+
 class Feature(Glyph):
     """ A feature is the defining characteristic of a tile. This is the parent
     class that all features will inherit from. 
@@ -14,7 +19,7 @@ class Feature(Glyph):
         self.blocks_light = blocks_light
         self.blocks_movement = blocks_movement
 
-class Wall(Feature):
+class Wall(Feature, Explorable):
     """ A Wall feature that blocks both light and movement"""
 
     icon = '#'
@@ -33,4 +38,6 @@ class EmptyFeature(Feature):
 
     def __init__(self):
         super().__init__(self.blocks_light, self.blocks_movement, self.icon)
+
+
 

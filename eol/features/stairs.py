@@ -1,8 +1,8 @@
-from features.feature import Feature
+from features.feature import Feature, Explorable
 import levels.level as lvls
 import features.stairs
 
-class Stairway(Feature):
+class Stairway(Feature, Explorable):
     """ A stairway.
     """
 
