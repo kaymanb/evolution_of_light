@@ -1,5 +1,6 @@
 from games.game import EoLGame
 from levels.level import Level
+from games.errors import ColorsNotSupportedError
 import constants.colors
 import games.console as console
 import constants.globals
@@ -15,9 +16,17 @@ def main(screen):
 
     - screen: game screen accepted from curses.wrapper(main)
     """
-    constants.colors.init_colors()
+    try:
+        constants.colors.init_colors()
+    except ColorsNotSupportedError:
+        msg = "ERROR: To play EoL please open it in a terminal with color support."
+        prompt = "Press any key to quit."
+        display_message(msg, prompt)
+        return
 
-    display_welcome()
+    msg = "Welcome to Evolution of Light!"
+    prompt = "Press any key to begin."
+    display_message(msg, prompt)
 
     # Turn off blinking cursor.
     curses.curs_set(0)
@@ -49,10 +58,8 @@ def parse_arguments():
 
     constants.globals.WIZARD_MODE = args.wizard_mode
 
-def display_welcome():
+def display_message(msg, prompt):
     win = curses.newwin(GAME_HEIGHT + CONSOLE_HEIGHT, GAME_WIDTH)
-    msg = "Welcome to Evolution of Light!"
-    prompt = "Press any key to begin."
 
     msg_start_x = (GAME_WIDTH - len(msg)) // 2
     msg_start_y = (GAME_HEIGHT + CONSOLE_HEIGHT) // 2

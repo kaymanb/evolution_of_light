@@ -22,7 +22,7 @@ class Character(Glyph):
     def move(self, new_tile):
         """ Move this character to a new tile.
         """
-  
+        
         if new_tile.char is not None:
             return
             #raise InvalidMovementError("That tile looks a bit small for two.")
