@@ -26,6 +26,14 @@ class LevelMap:
         """
         return self.tiles[x][y]
 
+    def get_empty_tile(self):
+        """ Returns an empty tile in the map.
+        """
+        for row in self.tiles:
+            for tile in row:
+                if isinstance(feat.EmptyFeature, tile.feature) and tile.char == None:
+                    return tile
+
     def draw_map(self, screen, char):
         """ Draws the map to the input screen, as though it is from the
         perspective of the input char.
@@ -35,7 +43,6 @@ class LevelMap:
                 tile.brightness = char.sight_map[tile.x][tile.y]
 
                 # Mark tiles that have been seen as explored.
-                # TODO: Only do this for explorable tiles.
                 if tile.brightness > 0:
                     tile.explored = True
 
@@ -57,7 +64,7 @@ class RoomsMap(LevelMap):
         super().__init__(x, y)
         self.rooms = []
     
-    def get_a_tile(self):
+    def get_empty_tile(self):
         """ Get an empty tile inside of a random room
         """
         room_index = random.randint(0, len(self.rooms) - 1)

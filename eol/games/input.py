@@ -11,6 +11,7 @@ MOVEMENT_KEYS  = frozenset([curses.KEY_UP, curses.KEY_DOWN,
 QUIT = ord('q')
 CLIMB_DOWN = ord('<')
 CLIMB_UP = ord('>')
+INSPECT = ord(';')
 
 class InputHandler:
     """ Class for handling user input. Tells the player and the screen what
@@ -32,7 +33,9 @@ class InputHandler:
                 new_tile = self.handle_movement(key)
                 self.player.move(new_tile)
                 return 'player_moved'
-            
+            elif key == INSPECT:
+                console.STD.log("You see " + self.player.tile.inspect() + ".")
+
             elif key == CLIMB_DOWN:
                 if isinstance(self.player.tile.feature, features.stairs.StairwayDown):
                     console.STD.log("You climb down the staircase...")
@@ -44,8 +47,14 @@ class InputHandler:
                     self.handle_staircase(self.player.tile.feature)
         
             elif key == QUIT:
-                curses.endwin()
-                return 'quit'
+                msg = "Are you sure you want to quit? Press 'y' to confirm."
+                console.STD.log(msg)
+                confirm = self.game.screen.getch()
+                if confirm == ord('y'):
+                    curses.endwin()
+                    return 'quit'
+                else:
+                    console.STD.log("You reluctantly keep playing.")
         except InvalidMovementError:
             curses.beep()
             pass

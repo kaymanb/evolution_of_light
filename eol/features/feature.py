@@ -1,7 +1,8 @@
 from features.glyphs import Glyph
 import curses
+import re
 
-class Explorable():
+class Explorable(object):
     
     explorable = True
 
@@ -18,6 +19,11 @@ class Feature(Glyph):
         super().__init__(icon, color)
         self.blocks_light = blocks_light
         self.blocks_movement = blocks_movement
+
+    def inspect(self):
+        class_name_array = re.findall('[A-Z][a-z]*', type(self).__name__)
+        class_name_array = [name.lower() for name in class_name_array]
+        return "a " + " ".join(class_name_array)
 
 class Wall(Feature, Explorable):
     """ A Wall feature that blocks both light and movement"""
@@ -38,6 +44,11 @@ class EmptyFeature(Feature):
 
     def __init__(self):
         super().__init__(self.blocks_light, self.blocks_movement, self.icon)
+
+    def inspect(self):
+        """ Returns a string describing the feature.
+        """
+        return "empty floorspace"
 
 
 

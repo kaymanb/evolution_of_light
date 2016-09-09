@@ -42,7 +42,7 @@ class Level:
         generate the appropiate npcs.
         """
 
-        npc_start_tile = self.level_map.get_a_tile()
+        npc_start_tile = self.level_map.get_empty_tile()
 
         npc = chars.npc.NPC(npc_start_tile, 'M', curses.color_pair(2))
         self.npcs.append(npc)

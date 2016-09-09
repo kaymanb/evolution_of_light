@@ -20,6 +20,11 @@ class Tile:
         self.explored = False
         self.brightness = 0
 
+    def inspect(self):
+        """ Returns a string describing the tile.
+        """
+        return self.feature.inspect()
+
     def draw_tile(self, screen):
         """ Draws the tile to the screen.
         """
@@ -85,19 +90,4 @@ class Rectangle:
         bool_x = self.x1 <= other.x2 and other.x1 <= self.x2
         bool_y = self.y1 <= other.y2 and other.y1 <= self.y2
         return bool_x and bool_y
-
-class Room(Rectangle):
-    """ A room.
-    """
-    
-    floor_feature = feat.EmptyFeature()
-
-    def list_floorspace(self):
-        """Return a list of all coordinate pairs that are in this room.
-        """
-
-        x_coords = [self.x1 + i for i in range(self.x2 - self.x1)]
-        y_coords = [self.y1 + j for j in range(self.y2 - self.y1)]
-
-        return [(x, y) for x in x_coords for y in y_coords]
 

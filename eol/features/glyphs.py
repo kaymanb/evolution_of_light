@@ -1,4 +1,4 @@
-class Glyph:
+class Glyph(object):
     """ A glyph object is a generic symbol. It has an icon and a color.
     """
     
