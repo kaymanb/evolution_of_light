@@ -1,5 +1,5 @@
 from games.input import InputHandler
-from chars.char import Character
+from chars.char import Player
 from levels.level import Level
 from features.stairs import StairwayDown
 import maps.map as maps
@@ -25,8 +25,7 @@ class EoLGame:
         start_room = self.current_level.level_map.rooms[0]
         (start_x, start_y) = start_room.list_floorspace()[0]
         start_tile = self.current_level.level_map.get_tile(start_x, start_y) 
-        self.player = Character(start_tile, '@', curses.color_pair(1))
-
+        self.player = Player(start_tile, '@', curses.color_pair(1))
         self.screen = screen
 
     def draw_game(self):
@@ -39,6 +38,7 @@ class EoLGame:
         """
         state = self.handle_input()
         self.run_npcs()
+        console.INFO.update(self.player)
         return state
 
     def run_npcs(self):

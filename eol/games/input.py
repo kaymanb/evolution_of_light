@@ -26,13 +26,20 @@ class InputHandler:
     def handle_input(self, key):
         """ Make changes and trigger events based on input key.
         """
+
+        # TODO: Make the return variables actually mean something.
         try:
             if key in MOVEMENT_KEYS:
 
                 old_tile = self.player.tile
                 new_tile = self.handle_movement(key)
                 self.player.move(new_tile)
-                return 'player_moved'
+
+                # Incrementing this after moving means invalid movements don't
+                # count as a turn.
+                self.player.turns += 1 
+
+                return "player_moved"
             elif key == INSPECT:
                 console.STD.log("You see " + self.player.tile.inspect() + ".")
 
@@ -42,8 +49,8 @@ class InputHandler:
                     self.handle_staircase(self.player.tile.feature)
            
             elif key == CLIMB_UP:
-                console.STD.log("You climb up the staircase...")
-                if isinstance(self.player.tile.feature, features.stairs.StairwayUp):
+                if isinstance(self.player.tile.feature, features.stairs.StairwayUp): 
+                    console.STD.log("You climb up the staircase...")
                     self.handle_staircase(self.player.tile.feature)
         
             elif key == QUIT:
@@ -52,9 +59,10 @@ class InputHandler:
                 confirm = self.game.screen.getch()
                 if confirm == ord('y'):
                     curses.endwin()
-                    return 'quit'
+                    return "quit"
                 else:
                     console.STD.log("You reluctantly keep playing.")
+
         except InvalidMovementError:
             curses.beep()
             pass

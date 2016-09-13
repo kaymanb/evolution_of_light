@@ -14,7 +14,13 @@ class Character(Glyph):
         self.tile = tile
         tile.char = self
         self.inventory =[]
-
+        
+        # Declare character attributes.
+        self.name = "Aht Sihmbol"
+        self.title = "the Lost"
+        self.max_hp = 10
+        self.hp = 10
+        self.ac = 0
 
         self.tile.explored = True
         self.sight_map = None # Maybe set to empty object instead of None?      
@@ -28,6 +34,10 @@ class Character(Glyph):
             #raise InvalidMovementError("That tile looks a bit small for two.")
 
         if (new_tile.feature.blocks_movement):
+            
+            # TODO: Remove this test bs.
+            self.hp -= 1
+
             raise errors.InvalidMovementError("Tile Blocks Movement")
         
         self.tile.char = None
@@ -40,4 +50,13 @@ class Character(Glyph):
         """ Returns whether this character can see the input tile.
         """
         return self.sight_map[tile.x][tile.y] > 0
-    
+
+class Player(Character):
+    """ The games hero, a player.
+    """
+
+    def __init__(self, tile, icon, color=curses.COLOR_WHITE):
+        """ Create a player.
+        """
+        super().__init__(tile, icon, color)
+        self.turns = 0
