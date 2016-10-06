@@ -21,12 +21,15 @@ class Feature(Glyph):
         self.blocks_movement = blocks_movement
 
     def inspect(self):
+        """ Returns a description of this feature.
+        """
         class_name_array = re.findall('[A-Z][a-z]*', type(self).__name__)
         class_name_array = [name.lower() for name in class_name_array]
         return "a " + " ".join(class_name_array)
 
 class Wall(Feature, Explorable):
-    """ A Wall feature that blocks both light and movement"""
+    """ A Wall feature that blocks both light and movement.
+    """
 
     icon = '#'
     blocks_light = True
@@ -36,7 +39,8 @@ class Wall(Feature, Explorable):
         super().__init__(self.blocks_light, self.blocks_movement, self.icon)
     
 class EmptyFeature(Feature):
-    """ An empty feature that omits both light and movement"""
+    """ An empty feature that omits both light and movement.
+    """
 
     icon = '.'
     blocks_light = False

@@ -7,6 +7,7 @@ import curses
 def init_colors():
    
     # TODO: Refactor this with a better message.
+    # TODO: Add global constants for common colors instead of curses.color_pair
     if not curses.has_colors():
         raise errors.ColorsNotSupportedError("ERR") 
 
