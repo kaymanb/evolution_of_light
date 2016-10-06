@@ -8,8 +8,8 @@ You play as an explorer, making your way through an endless dungeon. You can
 identify yourself as the '@' symbol.
 
 SETUP:
-To play the game, clone the entire repo. Navigate to evolution_of_light/eol/,
-and run 'python3 main.py'. Add the '--help' tag for further instructions.
+To play the game, clone the entire repo. Navigate to evolution_of_light/,
+and run 'python3 eol/main.py'. Add the '--help' tag for further instructions.
 
 REQUIREMENTS:
 Python3

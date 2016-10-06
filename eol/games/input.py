@@ -47,11 +47,13 @@ class InputHandler:
                 if isinstance(self.player.tile.feature, features.stairs.StairwayDown):
                     console.STD.log("You climb down the staircase...")
                     self.handle_staircase(self.player.tile.feature)
+                    self.player.turns += 1
            
             elif key == CLIMB_UP:
                 if isinstance(self.player.tile.feature, features.stairs.StairwayUp): 
                     console.STD.log("You climb up the staircase...")
                     self.handle_staircase(self.player.tile.feature)
+                    self.player.turns += 1
         
             elif key == QUIT:
                 msg = "Are you sure you want to quit? Press 'y' to confirm."

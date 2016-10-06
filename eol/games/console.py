@@ -19,6 +19,7 @@ class ConsoleManager(object):
         dimensions.
         """
         self.win = curses.newwin(height, width, y, x)
+        self.win.touchwin()
    
     def log(self, msg):
         """ Logs a message to the console.
