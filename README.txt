@@ -13,6 +13,7 @@ and run 'python3 eol/main.py'. Add the '--help' tag for further instructions.
 
 REQUIREMENTS:
 Python3
+Terminal with color support.
 
 CONTROLS:
 Arrow Keys = Move around the map.
