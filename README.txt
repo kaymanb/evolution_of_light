@@ -1,7 +1,7 @@
 Evolution of Light
 
 EoL is a roguelike adventure game playable in the shell. It is written in
-python and makes extensive use of the curses library to display text to the
+python and makes extensive use of the curses library to display ASCII to the
 screen.
 
 You play as an explorer, making your way through an endless dungeon. You can
