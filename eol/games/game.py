@@ -46,7 +46,7 @@ class EoLGame:
         action.
         """
         for npc in self.current_level.npcs:
-            npc.wander(self.current_level.level_map)
+            npc.follow_player(self.current_level.level_map, self.player)
 
     def handle_input(self):
         """ Handle user input, allowing the player to perform an action.

@@ -34,10 +34,6 @@ class Character(Glyph):
             #raise InvalidMovementError("That tile looks a bit small for two.")
 
         if (new_tile.feature.blocks_movement):
-            
-            # TODO: Remove this test bs.
-            self.hp -= 1
-
             raise errors.InvalidMovementError("Tile Blocks Movement")
         
         self.tile.char = None
@@ -46,7 +42,7 @@ class Character(Glyph):
 
         self.tile.explored = True
     
-    def can_see(tile):
+    def can_see(self, tile):
         """ Returns whether this character can see the input tile.
         """
         return self.sight_map[tile.x][tile.y] > 0

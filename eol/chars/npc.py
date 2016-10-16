@@ -30,3 +30,21 @@ class NPC(Character):
         except errors.InvalidMovementError:
             self.wander(level_map)
 
+    def follow_player(self, level_map, player):
+        """ Wanders, but follows the player if he comes into vision.
+        """
+        if self.can_see( player.tile):
+            move_horz = not self.tile.x == player.tile.x
+            if move_horz:
+                delta = 1 if self.tile.x < player.tile.x else -1
+                new_tile = level_map.get_tile(self.tile.x + delta, self.tile.y)
+            else:
+                delta = 1 if self.tile.y < player.tile.y else -1
+                new_tile = level_map.get_tile(self.tile.x, self.tile.y + delta)
+
+            try:
+                self.move(new_tile)
+            except errors.InvalidMovementError:
+                self.wander(level_map)
+        else:
+            self.wander(level_map)

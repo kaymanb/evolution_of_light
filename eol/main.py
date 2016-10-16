@@ -50,7 +50,7 @@ def main(screen):
 
     while(True):
         state = main_game.do_turn() 
-        
+        curses.doupdate()        
         # TODO: Figure out what the deal is with doupdate()
         #curses.doupdate()
         if state == 'quit':
