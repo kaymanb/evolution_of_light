@@ -38,6 +38,7 @@ class EoLGame:
         """
         state = self.handle_input()
         self.run_npcs()
+
         console.INFO.update(self.player)
 
         # Draw the game. Must be done after everything else.

@@ -1,5 +1,6 @@
 from features.glyphs import Glyph
 import games.errors as errors
+import items.weapons as weapons
 import games.console as console
 import curses
 
@@ -22,16 +23,18 @@ class Character(Glyph):
         self.max_hp = 10
         self.hp = 10
         self.ac = 0
+        self.wep = weapons.MeleeWeapon("t", curses.COLOR_WHITE, 1)
 
         self.tile.explored = True
         self.sight_map = None # Maybe set to empty object instead of None?      
 
     def move(self, new_tile):
-        """ Move this character to a new tile.
+        """ Move this character to a new tile. Will automatically attack anyone
+        occupying the new tile. 
         """
         
         if new_tile.char is not None:
-            console.STD.log("Someone is already standing there.")
+            self.attack(new_tile.char) 
             return
             #raise InvalidMovementError("That tile looks a bit small for two.")
 
@@ -49,6 +52,11 @@ class Character(Glyph):
         """
         return self.sight_map[tile.x][tile.y] > 0
 
+    def attack(self, other):
+        """ Attacks the other character with current weapon.
+        """
+        other.hp -= max(1, self.wep.dmg - other.ac)
+
 class Player(Character):
     """ The games hero, a player.
     """
@@ -57,4 +65,5 @@ class Player(Character):
         """ Create a player.
         """
         super().__init__(tile, icon, color)
+        self.hp = 15
         self.turns = 0
