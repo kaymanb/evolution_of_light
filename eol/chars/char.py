@@ -1,5 +1,6 @@
 from features.glyphs import Glyph
 import games.errors as errors
+import games.console as console
 import curses
 
 class Character(Glyph):
@@ -30,6 +31,7 @@ class Character(Glyph):
         """
         
         if new_tile.char is not None:
+            console.STD.log("Someone is already standing there.")
             return
             #raise InvalidMovementError("That tile looks a bit small for two.")
 

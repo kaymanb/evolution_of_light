@@ -39,6 +39,9 @@ class EoLGame:
         state = self.handle_input()
         self.run_npcs()
         console.INFO.update(self.player)
+
+        # Draw the game. Must be done after everything else.
+        self.draw_game()
         return state
 
     def run_npcs(self):
@@ -56,5 +59,4 @@ class EoLGame:
         # TODO: Maybe don't reinstaniate this every turn.
         new = InputHandler(self)
         state = new.handle_input(key)
-        self.draw_game()
         return state
