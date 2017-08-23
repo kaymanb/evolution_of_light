@@ -1,6 +1,6 @@
 Evolution of Light
 
-EoL is a roguelike adventure game playable in the shell. It is written in
+EoL is a roguelike adventure game playable in a shell. It is written in
 python and makes extensive use of the curses library to display ASCII to the
 screen.
 
